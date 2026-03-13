@@ -1,0 +1,413 @@
+// Import Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+
+
+// Color Variables
+$primary-teal: #0d9488;
+$secondary-orange: #f97316;
+$accent-cyan: #06b6d4;
+$light-cream: #fafaf9;
+$dark-bg: #0f172a;
+$text-dark: #1f2937;
+$text-light: #6b7280;
+$border-light: #e5e7eb;
+
+// Gradients
+$gradient-primary: linear-gradient(135deg, #0d9488 0%, #06b6d4 100%);
+$gradient-warm: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+$gradient-hero: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0d9488 100%);
+$gradient-accent: linear-gradient(135deg, #06b6d4 0%, #0d9488 100%);
+
+// Typography
+$font-display: 'Plus Jakarta Sans', sans-serif;
+$font-body: 'Inter', sans-serif;
+
+// Transitions
+$transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+// ====================
+// Announcement Bar
+// ====================
+.announcement-bar {
+  background: linear-gradient(90deg, #0d9488 0%, #06b6d4 100%);
+  color: white;
+  padding: 14px 24px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  font-family: $font-body;
+  box-shadow: 0 2px 12px rgba(13, 148, 136, 0.15);
+  position: relative;
+  
+  &::before {
+    content: '✓';
+    margin-right: 8px;
+    font-weight: bold;
+  }
+}
+
+// ====================
+// Header / Navbar
+// ====================
+.home-header {
+  background: $light-cream;
+  padding: 24px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid $border-light;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  
+  .brand {
+    font-size: 26px;
+    font-weight: 700;
+    color: $text-dark;
+    margin: 0;
+    letter-spacing: -0.5px;
+    font-family: $font-display;
+    background: $gradient-primary;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+// ====================
+// Main Content Container
+// ====================
+.home-main {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+ height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 40px;
+  position: relative;
+  overflow: hidden;
+  font-family: $font-body;
+
+  // Decorative elements
+  &::before {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(15, 118, 110, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    top: -150px;
+    right: -150px;
+    filter: blur(50px);
+    pointer-events: none;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(6, 182, 212, 0.06) 0%, transparent 70%);
+    border-radius: 50%;
+    bottom: -200px;
+    left: -200px;
+    filter: blur(60px);
+    pointer-events: none;
+  }
+}
+
+// ====================
+// Hero Section
+// ====================
+.hero {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 800px;
+  margin-bottom: 60px;
+
+  h1 {
+    font-size: 64px;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0 0 24px 0;
+    line-height: 1.15;
+    letter-spacing: -1.5px;
+    font-family: $font-display;
+    
+    // Gradient text effect
+    background: linear-gradient(135deg, #06b6d4 0%, #0d9488 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    word-spacing: 0.05em;
+  }
+
+  p {
+    font-size: 18px;
+    color: #cbd5e1;
+    margin: 0;
+    line-height: 1.7;
+    letter-spacing: 0.3px;
+    font-family: $font-body;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+// ====================
+// Action Buttons Container
+// ====================
+.actions {
+  display: flex;
+  gap: 20px;
+  position: relative;
+  z-index: 2;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+// ====================
+// Button Styles
+// ====================
+.btn {
+  padding: 16px 40px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: $transition-smooth;
+  letter-spacing: 0.4px;
+  font-family: $font-display;
+  position: relative;
+  overflow: hidden;
+  text-transform: none;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.15);
+    transition: left 0.4s ease;
+    z-index: -1;
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  // Primary Button
+  &.primary {
+    background: $gradient-primary;
+    color: white;
+    box-shadow: 0 8px 20px rgba(13, 148, 136, 0.25);
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(13, 148, 136, 0.35);
+    }
+
+    &:active {
+      transform: translateY(-1px);
+    }
+  }
+
+  // Secondary Button
+  &.secondary {
+    background: transparent;
+    color: $primary-teal;
+    border: 2px solid $primary-teal;
+    box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.1) inset;
+
+    &:hover {
+      background: rgba(13, 148, 136, 0.08);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(13, 148, 136, 0.15);
+      border-color: $accent-cyan;
+      color: $accent-cyan;
+    }
+
+    &:active {
+      transform: translateY(-1px);
+    }
+  }
+}
+
+// ====================
+// Benefits Section (Optional)
+// ====================
+.benefits {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+  margin-top: 100px;
+  width: 100%;
+  max-width: 1100px;
+
+  .benefit-card {
+    background: white;
+    padding: 32px;
+    border-radius: 16px;
+    border: 1px solid $border-light;
+    transition: $transition-smooth;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+    &:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 32px rgba(13, 148, 136, 0.12);
+      border-color: $primary-teal;
+    }
+
+    .icon {
+      width: 48px;
+      height: 48px;
+      background: $gradient-primary;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 24px;
+    }
+
+    h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: $text-dark;
+      margin: 0 0 12px 0;
+      font-family: $font-display;
+    }
+
+    p {
+      font-size: 15px;
+      color: $text-light;
+      margin: 0;
+      line-height: 1.6;
+      font-family: $font-body;
+    }
+  }
+}
+
+// ====================
+// Responsive Design
+// ====================
+@media (max-width: 1024px) {
+  .home-main {
+    padding: 60px 32px;
+  }
+
+  .hero {
+    h1 {
+      font-size: 48px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .home-header {
+    padding: 16px 24px;
+
+    .brand {
+      font-size: 22px;
+    }
+  }
+
+  .home-main {
+    padding: 50px 24px;
+
+    &::before {
+      width: 300px;
+      height: 300px;
+      top: -100px;
+      right: -100px;
+    }
+
+    &::after {
+      width: 350px;
+      height: 350px;
+      bottom: -150px;
+      left: -150px;
+    }
+  }
+
+  .hero {
+    margin-bottom: 40px;
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 16px;
+    }
+
+    p {
+      font-size: 16px;
+    }
+  }
+
+  .actions {
+    gap: 16px;
+    flex-direction: column;
+    align-items: center;
+
+    .btn {
+      width: 100%;
+      max-width: 320px;
+    }
+  }
+
+  .benefits {
+    gap: 20px;
+    margin-top: 60px;
+
+    .benefit-card {
+      padding: 24px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .home-main {
+    padding: 40px 16px;
+    min-height: auto;
+  }
+
+  .hero {
+    margin-bottom: 30px;
+
+    h1 {
+      font-size: 28px;
+      letter-spacing: -0.8px;
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 1.6;
+    }
+  }
+
+  .btn {
+    padding: 14px 32px;
+    font-size: 15px;
+    width: 100%;
+  }
+
+  .benefits {
+    grid-template-columns: 1fr;
+    margin-top: 40px;
+  }
+}
