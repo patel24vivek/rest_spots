@@ -50,7 +50,7 @@ const AddPlace = () => {
 
   /* ---------- Fetch existing places for map ---------- */
   useEffect(() => {
-    fetch("http://localhost:5000/api/places")
+   fetch("https://rest-spots-backend.onrender.com/api/places")
       .then((res) => res.json())
       .then((data) => setExistingPlaces(data))
       .catch(() => console.log("Failed to load existing places"));
@@ -113,7 +113,7 @@ const AddPlace = () => {
       lng: location.lng,
     };
 
-    fetch("http://localhost:5000/api/places", {
+    fetch("https://rest-spots-backend.onrender.com/api/places", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

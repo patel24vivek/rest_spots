@@ -24,7 +24,7 @@ const FindPlace = () => {
   useEffect(() => {
     setStatus("Loading places...");
 
-    fetch("http://localhost:5000/api/places")
+    fetch("https://rest-spots-backend.onrender.com/api/places")
       .then((res) => res.json())
       .then((data) => {
         setAllPlaces(data);

@@ -8,7 +8,9 @@ import cors from "cors";
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: "https://your-frontend.onrender.com"
+}));
 // middleware
 app.use(express.json());
 
