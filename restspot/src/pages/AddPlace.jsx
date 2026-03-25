@@ -8,7 +8,7 @@ import {
   useMapEvents,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import "./addplace.scss";
+import "./AddPlace.scss";
 
 /* ---------- Map Helpers ---------- */
 
