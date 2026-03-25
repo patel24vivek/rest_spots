@@ -48,12 +48,22 @@ const AddPlace = () => {
   const [existingPlaces, setExistingPlaces] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
 
-  /* ---------- Fetch existing places for map ---------- */
-  useEffect(() => {
-   fetch("https://rest-spots-backend.onrender.com/api/places")
+  /* ---------- Fetch places ---------- */
+
+  const fetchPlaces = () => {
+    fetch("https://rest-spots-backend.onrender.com/api/places")
       .then((res) => res.json())
-      .then((data) => setExistingPlaces(data))
-      .catch(() => console.log("Failed to load existing places"));
+      .then((data) => {
+        console.log("Fetched places:", data);
+        setExistingPlaces(data);
+      })
+      .catch((err) => {
+        console.error("Fetch error:", err);
+      });
+  };
+
+  useEffect(() => {
+    fetchPlaces();
   }, []);
 
   /* ---------- Form Handling ---------- */
@@ -68,11 +78,11 @@ const AddPlace = () => {
 
   const useMyLocation = () => {
     if (!navigator.geolocation) {
-      setLocationStatus("Geolocation is not supported by your browser.");
+      setLocationStatus("Geolocation is not supported.");
       return;
     }
 
-    setLocationStatus("Requesting location permission...");
+    setLocationStatus("Getting location...");
 
     navigator.geolocation.getCurrentPosition(
       (pos) => {
@@ -80,23 +90,22 @@ const AddPlace = () => {
           lat: pos.coords.latitude,
           lng: pos.coords.longitude,
         });
-        setLocationStatus("Location detected successfully.");
+        setLocationStatus("Location detected.");
       },
       () => {
-        setLocationStatus(
-          "Location access denied. Please select the location on the map."
-        );
+        setLocationStatus("Permission denied. Select manually.");
       }
     );
   };
 
-  
+  /* ---------- Submit ---------- */
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setSuccessMessage("");
 
     if (!form.confirmPublic) {
-      alert("Please confirm this is a free, public place.");
+      alert("Please confirm this is a public place.");
       return;
     }
 
@@ -120,20 +129,42 @@ const AddPlace = () => {
       },
       body: JSON.stringify(newPlace),
     })
-      .then((res) => res.json())
-      .then(() => {
+      .then(async (res) => {
+        const data = await res.json();
+
+        console.log("STATUS:", res.status);
+        console.log("RESPONSE:", data);
+
+        if (!res.ok) {
+          throw new Error(data.message || "Failed to save");
+        }
+
+        return data;
+      })
+      .then((data) => {
+        console.log("Saved:", data);
+
         setSuccessMessage("✅ Place submitted successfully.");
+
         setForm({
           name: "",
           type: "Temple",
           restType: "Quick",
           confirmPublic: false,
         });
+
         setLocation(null);
+
+        // 🔥 sync UI with DB
+        fetchPlaces();
       })
-      .catch(() => alert("Failed to add place"));
+      .catch((err) => {
+        console.error("ERROR:", err);
+        alert("❌ Failed to add place");
+      });
   };
 
+  /* ---------- UI ---------- */
 
   return (
     <div style={{ maxWidth: "600px", margin: "40px auto" }}>
@@ -179,10 +210,10 @@ const AddPlace = () => {
         </button>
 
         {locationStatus && (
-          <p style={{ marginTop: 8, fontSize: 14 }}>{locationStatus}</p>
+          <p style={{ marginTop: 8 }}>{locationStatus}</p>
         )}
 
-        <p style={{ margin: "12px 0" }}>Or select location on map:</p>
+        <p style={{ margin: "12px 0" }}>Or select on map:</p>
 
         <MapContainer
           center={[22.3072, 73.1812]}
@@ -195,10 +226,7 @@ const AddPlace = () => {
           <RecenterMap location={location} />
 
           {existingPlaces.map((place) => (
-            <Marker
-              key={place._id}
-              position={[place.lat, place.lng]}
-            />
+            <Marker key={place._id} position={[place.lat, place.lng]} />
           ))}
 
           {location && (
@@ -212,8 +240,8 @@ const AddPlace = () => {
             name="confirmPublic"
             checked={form.confirmPublic}
             onChange={handleChange}
-          />{" "}
-          This is a free, public, non-commercial place
+          />
+          This is a free public place
         </label>
 
         <button type="submit" style={{ marginTop: 20 }}>
@@ -222,7 +250,7 @@ const AddPlace = () => {
 
         <Link to="/">
           <button type="button" style={{ marginLeft: 10 }}>
-            Back to Home
+            Back
           </button>
         </Link>
       </form>
